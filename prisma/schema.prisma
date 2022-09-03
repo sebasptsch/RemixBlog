@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String?
+  accounts  Provider[]
+  createdAt DateTime   @default(now())
+  avatarSrc String?
+  updatedAt DateTime   @updatedAt
+  role      Role       @default(USER)
+  posts     Post[]
+  images    Image[]    @relation("uploader")
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum AccountType {
+  DISCORD
+  GITHUB
+  LOCAL
+}
+
+model Provider {
+  id        Int         @id @default(autoincrement())
+  uid       String
+  provider  AccountType
+  password  String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+
+  @@unique([uid, provider])
+  @@map("providers")
+}
+
+model Post {
+  id          Int         @id @default(autoincrement())
+  status      DraftStatus @default(DRAFT)
+  slug        String      @unique
+  title       String
+  summary     String
+  content     Json
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  createdAt   DateTime    @default(now())
+  publishedAt DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  bannerSrc   String?
+
+  @@map("posts")
+}
+
+model Image {
+  id       Int    @id @default(autoincrement())
+  filename String
+  path     String @unique
+  name     String
+  userId   Int
+  user     User   @relation(name: "uploader", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("images")
+}
+
+enum DraftStatus {
+  DRAFT
+  PUBLISHED
+}
