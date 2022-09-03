@@ -17,7 +17,13 @@ export const githubStrategy = new GitHubStrategy(
           provider: AccountType.GITHUB,
         },
       },
-      update: {},
+      update: {
+        user: {
+          update: {
+            name: profile.displayName,
+          },
+        },
+      },
       create: {
         uid: profile.id,
         provider: AccountType.GITHUB,

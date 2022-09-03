@@ -22,7 +22,10 @@ import React, { useContext, useEffect } from "react";
 
 import { ClientStyleContext, ServerStyleContext } from "./context";
 
+import { User } from "@prisma/client";
 import Footer from "./components/Footer";
+import Nav from "./components/Nav";
+import { authenticator } from "./services/auth.server";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -85,7 +88,10 @@ const Document = withEmotionCache(
 );
 
 export default function App() {
-  const cookies = useLoaderData<string>();
+  const { cookies, user } = useLoaderData<{
+    cookies: string;
+    user?: User;
+  }>();
   return (
     <Document>
       <ChakraProvider
@@ -96,6 +102,7 @@ export default function App() {
         }
       >
         <Flex direction={"column"} minH="100vh">
+          <Nav user={user} />
           <Container maxW="container.lg">
             <Outlet />
           </Container>
@@ -108,7 +115,11 @@ export default function App() {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
+  const user = await authenticator.isAuthenticated(request);
   // first time users will not have any cookies and you may not return
   // undefined here, hence ?? is necessary
-  return request.headers.get("cookie") ?? "";
+  return {
+    cookies: request.headers.get("cookie") ?? "",
+    user: user ?? undefined,
+  };
 };

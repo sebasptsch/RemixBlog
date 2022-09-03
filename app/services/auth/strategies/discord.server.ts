@@ -17,7 +17,13 @@ export const discordStrategy = new DiscordStrategy(
           provider: AccountType.DISCORD,
         },
       },
-      update: {},
+      update: {
+        user: {
+          update: {
+            name: profile.displayName,
+          },
+        },
+      },
       create: {
         uid: profile.id,
         provider: AccountType.DISCORD,
