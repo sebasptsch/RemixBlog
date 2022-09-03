@@ -1,13 +1,14 @@
 import { AccountType } from "@prisma/client";
 import { DiscordStrategy } from "remix-auth-socials";
 import { authenticator } from "~/services/auth.server";
+import { config } from "~/services/config.server";
 import { db } from "~/utils/db.server";
 
 export const discordStrategy = new DiscordStrategy(
   {
-    clientID: "",
-    clientSecret: "",
-    callbackURL: "",
+    clientID: config.getOrThrow("DISCORD_CLIENT_ID"),
+    clientSecret: config.getOrThrow("DISCORD_CLIENT_SECRET"),
+    callbackURL: "http://localhost:3000/auth/discord/callback",
   },
   async ({ profile }) => {
     const { user } = await db.provider.upsert({
