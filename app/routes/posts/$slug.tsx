@@ -1,6 +1,6 @@
 import { Container, Divider, Heading } from "@chakra-ui/react";
 import { Post } from "@prisma/client";
-import { LoaderFunction } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Descendant } from "slate";
 import RichTextRenderer from "~/components/Editor/renderer";
@@ -13,6 +13,16 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     },
   });
   return { post };
+};
+
+export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
+  if (!data) {
+  } else {
+    return {
+      title: `${data.post.title} | Seb's Blog`,
+      description: `${data.post.summary}`,
+    };
+  }
 };
 
 interface LoaderData {

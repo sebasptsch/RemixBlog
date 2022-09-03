@@ -1,7 +1,6 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Button,
-  Link,
   Menu,
   MenuButton,
   MenuItem,
@@ -9,11 +8,13 @@ import {
   MenuProps,
 } from "@chakra-ui/react";
 import { DraftStatus } from "@prisma/client";
+import { Link } from "@remix-run/react";
 
 interface PostMenuProps {
   post: {
     id: number;
     status: DraftStatus;
+    slug: string;
   };
 }
 
@@ -60,7 +61,7 @@ export const PostMenu: React.FC<
         >
           Delete
         </MenuItem>
-        <MenuItem as={Link} to={`/admin/edit/${post.id}`}>
+        <MenuItem as={Link} to={`/posts/${post.slug}/edit`}>
           Edit
         </MenuItem>
         {/* <MenuItem>Delete</MenuItem>

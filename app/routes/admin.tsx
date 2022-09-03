@@ -12,7 +12,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { DraftStatus, User } from "@prisma/client";
-import { LoaderFunction } from "@remix-run/node";
+import { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import PostMenu from "~/components/PostMenu";
 import { authenticator } from "~/services/auth.server";
@@ -28,6 +28,11 @@ interface LoaderData {
     publishedAt: Date;
   }[];
 }
+
+export const action: ActionFunction = async ({ request }) => {
+  let formData = await request.formData();
+  let action = formData.get("action");
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request, {
