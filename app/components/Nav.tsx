@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { Role } from "@prisma/client";
 import { Link } from "@remix-run/react";
+import { FaHome } from "react-icons/fa";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 // import Logo from "../logo.svg";
 
@@ -26,23 +27,18 @@ const Nav: React.FC<{
   return (
     <Container maxW="container.lg">
       <Flex m={3}>
-        <Link to="">{/* <Image maxHeight={10} src={Logo} /> */}</Link>
+        <IconButton icon={<FaHome />} aria-label={"home"} as={Link} to="/" />
 
         <Spacer />
         <ButtonGroup spacing={6}>
           <IconButton
             aria-label="switch theme"
             onClick={toggleColorMode}
-            className="umami--click--theme-button"
             icon={colorMode === "dark" ? <MdDarkMode /> : <MdLightMode />}
           />
           {user ? (
             <>
-              <Button
-                className="umami--click--logout-button"
-                as={Link}
-                to="/auth/logout"
-              >
+              <Button as={Link} to="/auth/logout">
                 Logout
               </Button>
               <Menu>
@@ -56,11 +52,6 @@ const Nav: React.FC<{
                   {user.role === Role.ADMIN ? (
                     <MenuItem as={Link} to="/admin">
                       Posts
-                    </MenuItem>
-                  ) : null}
-                  {user.role === Role.ADMIN ? (
-                    <MenuItem as={Link} to="/images">
-                      Images
                     </MenuItem>
                   ) : null}
                 </MenuList>

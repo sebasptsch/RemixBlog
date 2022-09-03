@@ -19,6 +19,8 @@
     "@remix-run/serve": "^1.7.0",
     "argon2": "^0.29.1",
     "framer-motion": "^6",
+    "is-hotkey": "^0.2.0",
+    "lodash": "^4.17.21",
     "luxon": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -26,11 +28,17 @@
     "react-icons": "^4.4.0",
     "remix-auth": "^3.2.2",
     "remix-auth-form": "^1.1.2",
-    "remix-auth-socials": "^1.0.2"
+    "remix-auth-socials": "^1.0.2",
+    "slate": "^0.82.1",
+    "slate-history": "^0.66.0",
+    "slate-hyperscript": "^0.77.0",
+    "slate-react": "^0.82.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.7.0",
     "@remix-run/eslint-config": "^1.7.0",
+    "@types/lodash": "^4.14.184",
     "@types/luxon": "^3.0.1",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
