@@ -17,8 +17,10 @@
     "@remix-run/serve": "^1.7.0",
     "argon2": "^0.29.1",
     "framer-motion": "^6",
+    "luxon": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.4.0",
     "remix-auth": "^3.2.2",
     "remix-auth-form": "^1.1.2",
     "remix-auth-socials": "^1.0.2"
@@ -26,6 +28,7 @@
   "devDependencies": {
     "@remix-run/dev": "^1.7.0",
     "@remix-run/eslint-config": "^1.7.0",
+    "@types/luxon": "^3.0.1",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "eslint": "^8.20.0",
