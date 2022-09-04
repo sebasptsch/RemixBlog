@@ -68,10 +68,10 @@ model Post {
 
 model PostTag {
   postId Int
-  post   Post @relation(fields: [postId], references: [id], name: "PostOnTag")
+  post   Post @relation(fields: [postId], references: [id], name: "PostOnTag", onDelete: Cascade)
 
   tagLabel String
-  tag      Tag    @relation(fields: [tagLabel], references: [label], name: "TagOnPost")
+  tag      Tag    @relation(fields: [tagLabel], references: [label], name: "TagOnPost", onDelete: Cascade)
 
   @@id([postId, tagLabel])
 }
