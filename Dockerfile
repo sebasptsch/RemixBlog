@@ -38,7 +38,7 @@ ADD . .
 RUN yarn build
 
 # Finally, build the production image with minimal footprint
-FROM base
+FROM base as runner
 
 WORKDIR /myapp
 
@@ -49,4 +49,7 @@ COPY --from=build /myapp/build /myapp/build
 COPY --from=build /myapp/public /myapp/public
 ADD . .
 
-CMD ["yarn", "start"]
+EXPOSE 3000
+EXPOSE 5555
+
+CMD npx prisma migrate deploy && yarn start

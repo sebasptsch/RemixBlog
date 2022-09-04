@@ -29,4 +29,5 @@ jobs:
         id: docker_build
         with:
           push: true
+          target: build
           tags: ghcr.io/sebasptsch/remixblog:latest
