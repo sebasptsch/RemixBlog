@@ -70,15 +70,14 @@ model PostTag {
   postId Int
   post   Post @relation(fields: [postId], references: [id], name: "PostOnTag")
 
-  tagId Int
-  tag   Tag @relation(fields: [tagId], references: [id], name: "TagOnPost")
+  tagLabel String
+  tag      Tag    @relation(fields: [tagLabel], references: [label], name: "TagOnPost")
 
-  @@id([postId, tagId])
+  @@id([postId, tagLabel])
 }
 
 model Tag {
-  id    Int       @id @default(autoincrement())
-  label String    @unique
+  label String    @id
   posts PostTag[] @relation(name: "TagOnPost")
 
   @@map("tags")
