@@ -2,13 +2,9 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "npm-run-all -p build:*",
-    "dev": "npm-run-all -p dev:*",
-    "start": "remix-serve build",
-    "build:remix": "cross-env NODE_ENV=production remix build",
-    "build:worker": "esbuild ./app/entry.worker.ts --outfile=./public/entry.worker.js --minify --bundle --format=esm --define:process.env.NODE_ENV='\"production\"'",
-    "dev:remix": "cross-env NODE_ENV=development remix dev",
-    "dev:worker": "esbuild ./app/entry.worker.ts --outfile=./public/entry.worker.js --bundle --format=esm --define:process.env.NODE_ENV='\"development\"' --watch"
+    "build": "remix build",
+    "dev": "remix dev",
+    "start": "remix-serve build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.9",
@@ -16,12 +12,10 @@
     "@emotion/react": "^11",
     "@emotion/server": "^11",
     "@emotion/styled": "^11",
-    "@node-rs/argon2": "^1.2.0",
     "@prisma/client": "^4.3.1",
     "@remix-run/node": "^1.7.0",
     "@remix-run/react": "^1.7.0",
     "@remix-run/serve": "^1.7.0",
-    "argon2": "^0.29.1",
     "chakra-dayzed-datepicker": "^0.2.3",
     "date-fns": "^2.29.2",
     "dayzed": "^3.2.3",
@@ -34,9 +28,7 @@
     "react-google-recaptcha-v3": "^1.10.0",
     "react-icons": "^4.4.0",
     "remix-auth": "^3.2.2",
-    "remix-auth-form": "^1.1.2",
     "remix-auth-socials": "^1.0.2",
-    "remix-redis-session": "^0.0.11",
     "sitemap": "^7.1.1",
     "slate": "^0.82.1",
     "slate-history": "^0.66.0",
@@ -44,12 +36,7 @@
     "slate-react": "^0.82.1",
     "validate.js": "^0.13.1",
     "validator": "^13.7.0",
-    "yup": "^0.32.11",
-    "node-persist": "^3.1.0",
-    "web-push": "^3.4.5",
-    "npm-run-all": "^4.1.5",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.0.0"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.7.0",
@@ -62,8 +49,7 @@
     "eslint": "^8.20.0",
     "patch-package": "^6.4.7",
     "prisma": "^4.3.1",
-    "typescript": "^4.7.4",
-    "@types/node-persist": "^3.1.2"
+    "typescript": "^4.7.4"
   },
   "engines": {
     "node": ">=14"
