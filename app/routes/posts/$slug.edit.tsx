@@ -40,6 +40,7 @@ interface LoaderData {
 export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
   return {
     title: `Editing ${data.post.title}`,
+    description: data.post.title,
   };
 };
 

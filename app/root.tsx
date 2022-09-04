@@ -30,7 +30,8 @@ import { theme } from "./utils/theme";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "Seb's Blog",
+  meta: "An archive and showcase of my experiences and projects.",
   viewport: "width=device-width,initial-scale=1",
 });
 

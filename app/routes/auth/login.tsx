@@ -16,6 +16,7 @@ export const loader: LoaderFunction = ({ request }) =>
 
 export const meta: MetaFunction = ({}) => ({
   title: "Login",
+  meta: "The login page.",
 });
 
 const Login: React.FC = () => {

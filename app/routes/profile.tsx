@@ -44,6 +44,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const meta: MetaFunction = ({ data }: { data: LoaderData }) => ({
   title: "Profile",
+  meta: "Where you can see your account information.",
 });
 
 const Profile: React.FC = () => {

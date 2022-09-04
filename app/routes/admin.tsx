@@ -92,6 +92,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const meta: MetaFunction = ({ data }: { data: LoaderData }) => ({
   title: "Admin",
+  meta: "The admin page where you can edit the posts you have created.",
 });
 
 const Admin: React.FC = () => {

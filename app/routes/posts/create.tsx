@@ -32,6 +32,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const meta: MetaFunction = ({ data }: { data: LoaderData }) => ({
   title: `New Post`,
+  description: "The post creation screen.",
 });
 
 export const action: ActionFunction = async ({ request }) => {

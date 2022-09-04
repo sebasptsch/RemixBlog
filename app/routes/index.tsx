@@ -6,6 +6,7 @@ import { db } from "~/utils/db.server";
 
 export const meta: MetaFunction = () => ({
   title: "Seb's Blog",
+  meta: "An archive and showcase of my experiences and projects.",
 });
 
 export default function Index() {
