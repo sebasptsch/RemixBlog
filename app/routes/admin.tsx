@@ -81,7 +81,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       publishedAt: true,
     },
     orderBy: {
-      publishedAt: "asc",
+      publishedAt: "desc",
     },
   });
   return {

@@ -23,15 +23,9 @@ export default function Index() {
       </Stack>
       <Divider my={5} />
       <SimpleGrid columns={[1, 2]} spacing={10} width="100%">
-        {posts
-          ?.sort(
-            (a, b) =>
-              new Date(b.publishedAt).getTime() -
-              new Date(a.publishedAt).getTime()
-          )
-          .map((post) => (
-            <Post post={post} key={post.id} />
-          ))}
+        {posts?.map((post) => (
+          <Post post={post} key={post.id} />
+        ))}
       </SimpleGrid>
     </>
   );
@@ -41,6 +35,9 @@ export const loader = async () => {
   const posts = await db.post.findMany({
     where: {
       status: "PUBLISHED",
+    },
+    orderBy: {
+      publishedAt: "desc",
     },
     select: {
       id: true,
