@@ -1,6 +1,5 @@
 // app/services/session.server.ts
 import { createCookieSessionStorage } from "@remix-run/node";
-import { createRedisSessionStorage } from "remix-redis-session";
 import { config } from "./config.server";
 // export the whole sessionStorage object
 export let sessionStorage = createCookieSessionStorage({

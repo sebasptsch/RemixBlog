@@ -23,8 +23,12 @@ import { db } from "~/utils/db.server";
 
 type LoaderData = User;
 
-export const loader: LoaderFunction = ({ request }) =>
-  authenticator.isAuthenticated(request, { failureRedirect: "/auth/login" });
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: "/auth/login",
+  });
+  if (user.role !== "ADMIN") return redirect("/auth/login");
+};
 
 export const meta: MetaFunction = ({ data }: { data: LoaderData }) => ({
   title: `New Post`,

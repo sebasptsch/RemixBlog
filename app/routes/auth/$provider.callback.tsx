@@ -6,6 +6,6 @@ export let loader: LoaderFunction = ({ request, params }) => {
   if (!params.provider) throw new Error("Not a valid provider");
   return authenticator.authenticate(params.provider, request, {
     successRedirect: "/profile",
-    failureRedirect: "/login",
+    failureRedirect: "/auth/login",
   });
 };

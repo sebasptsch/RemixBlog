@@ -68,9 +68,9 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login",
+    failureRedirect: "/auth/login",
   });
-  if (user.role !== "ADMIN") return redirect("/login");
+  if (user.role !== "ADMIN") return redirect("/auth/login");
   const posts = await db.post.findMany({
     where: { userId: user.id },
     select: {
