@@ -19,6 +19,7 @@ model User {
   updatedAt DateTime   @updatedAt
   role      Role       @default(USER)
   posts     Post[]
+  comments  Comment[]
 
   @@map("users")
 }
@@ -58,6 +59,7 @@ model Post {
   createdAt   DateTime    @default(now())
   publishedAt DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+  comments    Comment[]
 
   @@map("posts")
 }
@@ -65,4 +67,20 @@ model Post {
 enum DraftStatus {
   DRAFT
   PUBLISHED
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  content   String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  post      Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  parent    Comment?  @relation("CommentToComment", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId  Int?
+  children  Comment[] @relation("CommentToComment")
+
+  @@map("comments")
 }

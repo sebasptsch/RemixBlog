@@ -10,7 +10,7 @@ import {
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { Form, useActionData, useTransition } from "@remix-run/react";
-import { object, string, ValidationError } from "yup";
+import { mixed, object, string, ValidationError } from "yup";
 import RichTextBlock from "~/components/Editor/richTextEditor";
 import { authenticator } from "~/services/auth.server";
 import { db } from "~/utils/db.server";
@@ -32,12 +32,14 @@ export const action: ActionFunction = async ({ request }) => {
         .matches(/^[a-z0-9]+(?:[-/][a-z0-9]+)*$/)
         .required(),
       summary: string().required(),
-      content: string().required(),
+      content: mixed()
+        .transform((v) => JSON.parse(v))
+        .required(),
     });
 
     // covert formData to object
     const data = Object.fromEntries(formData.entries());
-
+    console.log({ data });
     const { title, slug, content, summary } = await createPostSchema.validate(
       data
     );
@@ -55,7 +57,7 @@ export const action: ActionFunction = async ({ request }) => {
         },
       });
 
-      return redirect(`/posts/${post.id}/edit`);
+      return redirect(`/posts/${post.slug}/edit`);
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === "P2002") {

@@ -8,7 +8,7 @@ import {
   MenuProps,
 } from "@chakra-ui/react";
 import { DraftStatus } from "@prisma/client";
-import { Link } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 
 interface PostMenuProps {
   post: {
@@ -26,39 +26,12 @@ export const PostMenu: React.FC<
       <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
         Actions
       </MenuButton>
-      <MenuList>
-        <MenuItem
-          onClick={() => {
-            if (post.status === "PUBLISHED") {
-              // Make Draft
-              //   api.posts
-              //     .editPostById(post.id, {
-              //       status: EditPostDto.status.DRAFT,
-              //     })
-              //     .then(() => {
-              //       mutate("/posts/me");
-              //     });
-            } else if (post.status === "DRAFT") {
-              // Publish
-              //   api.posts
-              //     .editPostById(post.id, {
-              //       status: EditPostDto.status.PUBLISHED,
-              //     })
-              //     .then(() => {
-              //       mutate("/posts/me");
-              //     });
-            }
-          }}
-        >
+      <MenuList as={Form} reloadDocument method="post">
+        <input type="hidden" name="id" value={post.id.toString()} />
+        <MenuItem name="action" type="submit" value="status">
           {post.status === "PUBLISHED" ? "Draft" : "Publish"}
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            // api.posts.deletePostById(post.id).then(() => {
-            //   mutate("/posts/me");
-            // });
-          }}
-        >
+        <MenuItem type="submit" name="action" value="delete">
           Delete
         </MenuItem>
         <MenuItem as={Link} to={`/posts/${post.slug}/edit`}>

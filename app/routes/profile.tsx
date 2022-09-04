@@ -10,7 +10,7 @@ import {
   StatNumber,
 } from "@chakra-ui/react";
 import { User } from "@prisma/client";
-import { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
 import { authenticator } from "~/services/auth.server";
@@ -40,6 +40,12 @@ export const action: ActionFunction = async ({ request }) => {
   } finally {
     return authenticator.logout(request, { redirectTo: "/auth/login" });
   }
+};
+
+export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
+  return {
+    title: "Profile",
+  };
 };
 
 const Profile: React.FC = () => {

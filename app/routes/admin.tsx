@@ -1,5 +1,7 @@
 import {
+  Button,
   Divider,
+  Flex,
   Heading,
   Table,
   TableContainer,
@@ -11,9 +13,14 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { DraftStatus, User } from "@prisma/client";
-import { ActionFunction, LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { DraftStatus, Post, User } from "@prisma/client";
+import {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  redirect,
+} from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 import PostMenu from "~/components/PostMenu";
 import { authenticator } from "~/services/auth.server";
 import { db } from "~/utils/db.server";
@@ -31,13 +38,39 @@ interface LoaderData {
 
 export const action: ActionFunction = async ({ request }) => {
   let formData = await request.formData();
+  let id = formData.get("id");
+  if (typeof id !== "string") throw new Error("Incorrect format");
   let action = formData.get("action");
+  if (typeof action !== "string") throw new Error("Incorrect format");
+  const post = await db.post.findUniqueOrThrow({ where: { id: parseInt(id) } });
+
+  let resultPost: Post | null = null;
+  switch (action) {
+    case "status":
+      resultPost = await db.post.update({
+        where: { id: parseInt(id) },
+        data: {
+          status:
+            post.status === DraftStatus.DRAFT
+              ? DraftStatus.PUBLISHED
+              : DraftStatus.DRAFT,
+        },
+      });
+      break;
+    case "delete":
+      resultPost = await db.post.delete({ where: { id: parseInt(id) } });
+      break;
+    default:
+      console.log(action);
+  }
+  return resultPost;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request, {
     failureRedirect: "/login",
   });
+  if (user.role !== "ADMIN") return redirect("/login");
   const posts = await db.post.findMany({
     where: { userId: user.id },
     select: {
@@ -57,6 +90,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   };
 };
 
+export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
+  return {
+    title: "Admin",
+  };
+};
+
 const Admin: React.FC = () => {
   const { user, posts } = useLoaderData<LoaderData>();
   return (
@@ -65,6 +104,11 @@ const Admin: React.FC = () => {
         Admin Dashboard
       </Heading>
       <Divider my={5} />
+      <Flex justifyContent={"center"}>
+        <Button as={Link} to={`/posts/create`}>
+          New Post
+        </Button>
+      </Flex>
       {/* <PostCreationDrawer /> */}
       <TableContainer>
         <Table variant={"simple"}>
@@ -80,7 +124,9 @@ const Admin: React.FC = () => {
             {!!posts?.length ? (
               posts.map((post) => (
                 <Tr key={post.id}>
-                  <Td>{post.title}</Td>
+                  <Td>
+                    <Link to={`/posts/${post.slug}`}>{post.title}</Link>
+                  </Td>
                   <Td>{post.slug}</Td>
                   <Td>
                     <Tag

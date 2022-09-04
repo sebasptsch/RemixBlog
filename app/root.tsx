@@ -26,6 +26,7 @@ import { User } from "@prisma/client";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import { authenticator } from "./services/auth.server";
+import { theme } from "./utils/theme";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -78,6 +79,7 @@ const Document = withEmotionCache(
         </head>
         <body>
           {children}
+          {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} /> */}
           <ScrollRestoration />
           <Scripts />
           <LiveReload />
@@ -92,15 +94,15 @@ export default function App() {
     cookies: string;
     user?: User;
   }>();
+
+  const colorModeManager =
+    typeof cookies === "string"
+      ? cookieStorageManagerSSR(cookies)
+      : localStorageManager;
+
   return (
     <Document>
-      <ChakraProvider
-        colorModeManager={
-          typeof cookies === "string"
-            ? cookieStorageManagerSSR(cookies)
-            : localStorageManager
-        }
-      >
+      <ChakraProvider colorModeManager={colorModeManager} theme={theme}>
         <Flex direction={"column"} minH="100vh">
           <Nav user={user} />
           <Container maxW="container.lg">

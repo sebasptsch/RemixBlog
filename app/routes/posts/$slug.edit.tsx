@@ -5,8 +5,11 @@ import {
   FormHelperText,
   FormLabel,
   Input,
+  Radio,
+  RadioGroup,
+  Stack,
 } from "@chakra-ui/react";
-import { Post, Prisma } from "@prisma/client";
+import { DraftStatus, Post, Prisma } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
 import {
@@ -15,8 +18,12 @@ import {
   useLoaderData,
   useTransition,
 } from "@remix-run/react";
+import { SingleDatepicker } from "chakra-dayzed-datepicker";
+import { DateTime } from "luxon";
+import { useState } from "react";
 import { Descendant } from "slate";
-import { object, string, ValidationError } from "yup";
+import isISO8601 from "validator/lib/isISO8601";
+import { mixed, object, string, ValidationError } from "yup";
 import RichTextBlock from "~/components/Editor/richTextEditor";
 import { authenticator } from "~/services/auth.server";
 import { db } from "~/utils/db.server";
@@ -49,21 +56,28 @@ export const action: ActionFunction = async ({ request, params }) => {
         .required(),
       summary: string().required(),
       content: string().required(),
+      status: mixed<DraftStatus>().oneOf(Object.values(DraftStatus)).required(),
+      publishedAt: string()
+        .required()
+        .test("is-iso", "${path} is not a valid iso date", (v) =>
+          v ? isISO8601(v) : false
+        ),
     });
 
     // covert formData to object
     const data = Object.fromEntries(formData.entries());
 
-    const { title, slug, content, summary } = await createPostSchema.validate(
-      data
-    );
+    const { title, slug, content, summary, status, publishedAt } =
+      await createPostSchema.validate(data);
 
     try {
       const post = await db.post.update({
-        where: { id: parseInt(params.id!) },
+        where: { slug: params.slug! },
         data: {
           title,
           slug,
+          publishedAt,
+          status,
           content: JSON.parse(content),
           summary,
           user: {
@@ -84,11 +98,13 @@ export const action: ActionFunction = async ({ request, params }) => {
           );
         }
       }
+      throw error;
     }
   } catch (error) {
     if (error instanceof ValidationError) {
       return error;
     }
+    throw error;
   }
   return null;
 };
@@ -97,9 +113,20 @@ const EditPost = () => {
   const error = useActionData<ValidationError>();
   const { post } = useLoaderData<LoaderData>();
   const transitionStatus = useTransition();
+  const [publishedAt, setPublishedAt] = useState<string>(post.publishedAt);
 
   return (
     <Form method="post">
+      <FormControl as="fieldset">
+        <FormLabel as="legend">Status</FormLabel>
+        <RadioGroup defaultValue={post.status} name="status">
+          <Stack direction="row">
+            <Radio value={DraftStatus.PUBLISHED}>Published</Radio>
+            <Radio value={DraftStatus.DRAFT}>Draft</Radio>
+          </Stack>
+        </RadioGroup>
+        {/* <FormHelperText>Select only if you're a fan.</FormHelperText> */}
+      </FormControl>
       <FormControl isRequired isInvalid={error?.path === "title"}>
         <FormLabel htmlFor="title">Title</FormLabel>
         <Input
@@ -124,6 +151,20 @@ const EditPost = () => {
           required
         />
         <FormHelperText>Enter a slug here</FormHelperText>
+        <FormErrorMessage>{error?.message}</FormErrorMessage>
+      </FormControl>
+      <FormControl isRequired isInvalid={error?.path === "publishedAt"}>
+        <FormLabel htmlFor="publishedAt">Published At</FormLabel>
+
+        <SingleDatepicker
+          id="publishedAt"
+          date={DateTime.fromISO(publishedAt).toJSDate()}
+          onDateChange={(date) => {
+            setPublishedAt(date.toISOString());
+          }}
+        />
+        <input type="hidden" value={publishedAt} name="publishedAt" />
+        <FormHelperText>Enter a Publish Date here</FormHelperText>
         <FormErrorMessage>{error?.message}</FormErrorMessage>
       </FormControl>
       <FormControl

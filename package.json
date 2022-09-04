@@ -18,6 +18,9 @@
     "@remix-run/react": "^1.7.0",
     "@remix-run/serve": "^1.7.0",
     "argon2": "^0.29.1",
+    "chakra-dayzed-datepicker": "^0.2.3",
+    "date-fns": "^2.29.2",
+    "dayzed": "^3.2.3",
     "framer-motion": "^6",
     "is-hotkey": "^0.2.0",
     "lodash": "^4.17.21",
@@ -33,6 +36,8 @@
     "slate-history": "^0.66.0",
     "slate-hyperscript": "^0.77.0",
     "slate-react": "^0.82.1",
+    "validate.js": "^0.13.1",
+    "validator": "^13.7.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -42,6 +47,7 @@
     "@types/luxon": "^3.0.1",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@types/validator": "^13.7.6",
     "eslint": "^8.20.0",
     "patch-package": "^6.4.7",
     "prisma": "^4.3.1",

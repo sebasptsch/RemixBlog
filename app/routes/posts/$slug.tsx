@@ -4,25 +4,29 @@ import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Descendant } from "slate";
 import RichTextRenderer from "~/components/Editor/renderer";
+import { authenticator } from "~/services/auth.server";
 import { db } from "~/utils/db.server";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const user = await authenticator.isAuthenticated(request);
   const post = await db.post.findUniqueOrThrow({
     where: {
       slug: params.slug!,
     },
   });
-  return { post };
+  if (
+    (post.status === "DRAFT" && post.userId === user?.id) ||
+    post.status === "PUBLISHED"
+  )
+    return { post };
+  throw new Error("Access Forbidden");
 };
 
 export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
-  if (!data) {
-  } else {
-    return {
-      title: `${data.post.title} | Seb's Blog`,
-      description: `${data.post.summary}`,
-    };
-  }
+  return {
+    title: `${data.post.title} | Seb's Blog`,
+    description: `${data.post.summary}`,
+  };
 };
 
 interface LoaderData {
