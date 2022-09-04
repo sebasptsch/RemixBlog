@@ -1,5 +1,7 @@
 import { Button, ButtonGroup, ButtonProps } from "@chakra-ui/react";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Form } from "@remix-run/react";
+import { authenticator } from "~/services/auth.server";
 
 const SocialButton: React.FC<
   ButtonProps & { provider: "github" | "discord" }
@@ -8,6 +10,13 @@ const SocialButton: React.FC<
     <Button {...buttonProps} type="submit" />
   </Form>
 );
+
+export const loader: LoaderFunction = ({ request }) =>
+  authenticator.isAuthenticated(request, { successRedirect: "/profile" });
+
+export const meta: MetaFunction = ({}) => ({
+  title: "Login",
+});
 
 const Login: React.FC = () => {
   return (
