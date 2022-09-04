@@ -1,13 +1,14 @@
 import { AccountType } from "@prisma/client";
 import { DiscordStrategy, GitHubStrategy } from "remix-auth-socials";
 import { authenticator } from "~/services/auth.server";
+import { config } from "~/services/config.server";
 import { db } from "~/utils/db.server";
 
 export const githubStrategy = new GitHubStrategy(
   {
-    clientID: "",
-    clientSecret: "",
-    callbackURL: "",
+    clientID: config.getOrThrow("GITHUB_CLIENT_ID"),
+    clientSecret: config.getOrThrow("GITHUB_CLIENT_SECRET"),
+    callbackURL: config.getOrThrow("GITHUB_CALLBACK"),
   },
   async ({ profile }) => {
     const { user } = await db.provider.upsert({

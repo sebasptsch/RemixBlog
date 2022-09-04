@@ -8,7 +8,7 @@ export const discordStrategy = new DiscordStrategy(
   {
     clientID: config.getOrThrow("DISCORD_CLIENT_ID"),
     clientSecret: config.getOrThrow("DISCORD_CLIENT_SECRET"),
-    callbackURL: "http://localhost:3000/auth/discord/callback",
+    callbackURL: config.getOrThrow("DISCORD_CALLBACK"),
   },
   async ({ profile }) => {
     const { user } = await db.provider.upsert({
