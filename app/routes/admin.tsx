@@ -90,11 +90,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   };
 };
 
-export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
-  return {
-    title: "Admin",
-  };
-};
+export const meta: MetaFunction = ({ data }: { data: LoaderData }) => ({
+  title: "Admin",
+});
 
 const Admin: React.FC = () => {
   const { user, posts } = useLoaderData<LoaderData>();

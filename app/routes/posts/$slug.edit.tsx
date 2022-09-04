@@ -11,7 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { DraftStatus, Post, Prisma } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import { ActionFunction, LoaderFunction } from "@remix-run/node";
+import {
+  ActionFunction,
+  json,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import {
   Form,
   useActionData,
@@ -32,6 +37,12 @@ interface LoaderData {
   post: Post;
 }
 
+export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
+  return {
+    title: `Editing ${data.post.title}`,
+  };
+};
+
 export const loader: LoaderFunction = async ({ request, params }) => {
   const post = await db.post.findUniqueOrThrow({
     where: { slug: params.slug! },
@@ -39,7 +50,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const user = await authenticator.isAuthenticated(request, {
     failureRedirect: `/posts/${post.slug}`,
   });
-  if (post.userId === user.id) return { post };
+  if (post.userId === user.id) return json({ post });
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -55,7 +66,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         .matches(/^[a-z0-9]+(?:[-/][a-z0-9]+)*$/)
         .required(),
       summary: string().required(),
-      content: string().required(),
+      content: mixed().transform(JSON.parse).required(),
       status: mixed<DraftStatus>().oneOf(Object.values(DraftStatus)).required(),
       publishedAt: string()
         .required()
@@ -78,7 +89,7 @@ export const action: ActionFunction = async ({ request, params }) => {
           slug,
           publishedAt,
           status,
-          content: JSON.parse(content),
+          content,
           summary,
           user: {
             connect: { id: user.id },

@@ -7,17 +7,28 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
+import { User } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
+import {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  redirect,
+} from "@remix-run/node";
 import { Form, useActionData, useTransition } from "@remix-run/react";
 import { mixed, object, string, ValidationError } from "yup";
 import RichTextBlock from "~/components/Editor/richTextEditor";
 import { authenticator } from "~/services/auth.server";
 import { db } from "~/utils/db.server";
 
-interface LoaderData {}
+type LoaderData = User;
 
-export const loader: LoaderFunction = async ({ request }) => null;
+export const loader: LoaderFunction = ({ request }) =>
+  authenticator.isAuthenticated(request, { failureRedirect: "/auth/login" });
+
+export const meta: MetaFunction = ({ data }: { data: LoaderData }) => ({
+  title: `New Post`,
+});
 
 export const action: ActionFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request, {
@@ -32,7 +43,7 @@ export const action: ActionFunction = async ({ request }) => {
         .matches(/^[a-z0-9]+(?:[-/][a-z0-9]+)*$/)
         .required(),
       summary: string().required(),
-      content: mixed()
+      content: mixed<string>()
         .transform((v) => JSON.parse(v))
         .required(),
     });

@@ -42,11 +42,9 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
-export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
-  return {
-    title: "Profile",
-  };
-};
+export const meta: MetaFunction = ({ data }: { data: LoaderData }) => ({
+  title: "Profile",
+});
 
 const Profile: React.FC = () => {
   const { user } = useLoaderData<LoaderData>();

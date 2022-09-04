@@ -1,7 +1,12 @@
 import { Divider, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Post from "~/components/Post";
 import { db } from "~/utils/db.server";
+
+export const meta: MetaFunction = () => ({
+  title: "Seb's Blog",
+});
 
 export default function Index() {
   const { posts } = useLoaderData<ReturnType<typeof loader>>();
