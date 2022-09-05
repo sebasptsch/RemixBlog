@@ -2,7 +2,7 @@ import { HeadersFunction, LoaderFunction } from "@remix-run/node";
 
 export const headers: HeadersFunction = () => {
   return {
-    "Cache-Control": "max-age=300, s-maxage=3600",
+    "Cache-Control": "public, max-age=300, s-maxage=3600",
   };
 };
 

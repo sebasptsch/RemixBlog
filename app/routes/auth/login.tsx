@@ -5,7 +5,7 @@ import { authenticator } from "~/services/auth.server";
 
 export const headers: HeadersFunction = () => {
   return {
-    "Cache-Control": "max-age=300, s-maxage=3600",
+    "Cache-Control": "public, max-age=300, s-maxage=3600",
   };
 };
 
