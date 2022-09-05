@@ -93,10 +93,14 @@ const Admin: React.FC = () => {
                     DateTime.DATETIME_MED
                   )}
                 </Td>
-                <Td>
+                <Td
+                  sx={{
+                    textTransform: "capitalize",
+                  }}
+                >
                   {userItem.accounts
-                    .map((account) => account.provider)
-                    .join(",")}
+                    .map((account) => account.provider.toLowerCase())
+                    .join(", ")}
                 </Td>
               </Tr>
             ))}
