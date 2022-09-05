@@ -1,7 +1,14 @@
-import { LoaderFunction } from "@remix-run/node";
+import { HeadersFunction, LoaderFunction } from "@remix-run/node";
 import { SitemapStream, streamToPromise } from "sitemap";
 import { Readable } from "stream";
 import { db } from "~/utils/db.server";
+
+export const headers: HeadersFunction = () => {
+  return {
+    "Cache-Control": "max-age=43200, must-revalidate",
+  };
+};
+
 export const loader: LoaderFunction = async ({ request }) => {
   //   const links = [{ url: "/page-1/", changefreq: "daily", priority: 0.3 }];
   const posts = await db.post.findMany({

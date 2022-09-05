@@ -1,7 +1,13 @@
 import { Button, ButtonGroup, ButtonProps } from "@chakra-ui/react";
-import { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import { authenticator } from "~/services/auth.server";
+
+export const headers: HeadersFunction = () => {
+  return {
+    "Cache-Control": "max-age=3600, must-revalidate",
+  };
+};
 
 const SocialButton: React.FC<
   ButtonProps & { provider: "github" | "discord" }

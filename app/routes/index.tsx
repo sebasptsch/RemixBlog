@@ -1,8 +1,14 @@
 import { Divider, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
-import { MetaFunction } from "@remix-run/node";
+import { HeadersFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Post from "~/components/Post";
 import { db } from "~/utils/db.server";
+
+export const headers: HeadersFunction = () => {
+  return {
+    "Cache-Control": "max-age=3600, must-revalidate",
+  };
+};
 
 export const meta: MetaFunction = () => ({
   title: "Seb's Blog",

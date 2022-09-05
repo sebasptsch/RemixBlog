@@ -1,11 +1,17 @@
 import { Container, Divider, Heading } from "@chakra-ui/react";
 import { Post } from "@prisma/client";
-import { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Descendant } from "slate";
 import RichTextRenderer from "~/components/Editor/renderer";
 import { authenticator } from "~/services/auth.server";
 import { db } from "~/utils/db.server";
+
+export const headers: HeadersFunction = () => {
+  return {
+    "Cache-Control": "max-age=3600, must-revalidate",
+  };
+};
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const user = await authenticator.isAuthenticated(request);

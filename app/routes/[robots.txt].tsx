@@ -1,4 +1,10 @@
-import { LoaderFunction } from "@remix-run/node";
+import { HeadersFunction, LoaderFunction } from "@remix-run/node";
+
+export const headers: HeadersFunction = () => {
+  return {
+    "Cache-Control": "max-age=43200, immutable",
+  };
+};
 
 export const loader: LoaderFunction = () => {
   const robotText = `
