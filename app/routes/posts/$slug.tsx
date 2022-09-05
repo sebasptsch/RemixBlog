@@ -9,7 +9,7 @@ import { db } from "~/utils/db.server";
 
 export const headers: HeadersFunction = () => {
   return {
-    "Cache-Control": "max-age=3600, must-revalidate",
+    "Cache-Control": "max-age=300, s-maxage=3600",
   };
 };
 
