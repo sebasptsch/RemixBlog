@@ -43,34 +43,29 @@ const Nav: React.FC<{
                   Profile
                 </MenuButton>
                 <MenuList>
-                  <MenuItem as={Link} to="/profile">
+                  <MenuItem as={Link} to="/profile" prefetch="intent">
                     My Account
                   </MenuItem>
                   {user.role === Role.ADMIN ? (
-                    <MenuItem as={Link} to="/admin/posts">
+                    <MenuItem as={Link} to="/admin/posts" prefetch="intent">
                       Posts
                     </MenuItem>
                   ) : null}
                   {user.role === Role.ADMIN ? (
-                    <MenuItem as={Link} to="/admin/users">
+                    <MenuItem as={Link} to="/admin/users" prefetch="intent">
                       Users
                     </MenuItem>
                   ) : null}
-                  <MenuItem as={Link} to="/auth/logout">
+                  <MenuItem as={Link} to="/auth/logout" prefetch="intent">
                     Logout
                   </MenuItem>
                 </MenuList>
               </Menu>
             </>
           ) : (
-            <>
-              <Button as={Link} to="/auth/login">
-                Sign In
-              </Button>
-              <Button as={Link} to="/auth/register">
-                Sign Up
-              </Button>
-            </>
+            <Button as={Link} to="/auth/login" prefetch="intent">
+              Sign In
+            </Button>
           )}
         </ButtonGroup>
       </Flex>

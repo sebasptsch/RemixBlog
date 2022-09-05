@@ -32,6 +32,7 @@ export const PostItem: React.FC<{ post: MinimalPost }> = ({ post }) => {
       borderWidth="1px"
       borderRadius="lg"
       p={5}
+      prefetch="intent"
       to={`/posts/${post.slug}`}
     >
       {DateTime.fromISO(post.publishedAt).toRelativeCalendar()}

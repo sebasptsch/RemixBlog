@@ -103,7 +103,7 @@ const Admin: React.FC = () => {
       </Heading>
       <Divider my={5} />
       <Flex justifyContent={"center"}>
-        <Button as={Link} to={`/posts/create`}>
+        <Button as={Link} to={`/posts/create`} prefetch="intent">
           New Post
         </Button>
       </Flex>
@@ -123,7 +123,9 @@ const Admin: React.FC = () => {
               posts.map((post) => (
                 <Tr key={post.id}>
                   <Td>
-                    <Link to={`/posts/${post.slug}`}>{post.title}</Link>
+                    <Link to={`/posts/${post.slug}`} prefetch="intent">
+                      {post.title}
+                    </Link>
                   </Td>
                   <Td>{post.slug}</Td>
                   <Td>
