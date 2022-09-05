@@ -67,8 +67,6 @@ const Admin: React.FC = () => {
         Users
       </Heading>
       <Divider my={5} />
-
-      {/* <PostCreationDrawer /> */}
       <TableContainer>
         <Table variant={"simple"}>
           <Thead>

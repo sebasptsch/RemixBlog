@@ -72,7 +72,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   });
   if (user.role !== "ADMIN") return redirect("/auth/login");
   const posts = await db.post.findMany({
-    where: { userId: user.id },
     select: {
       id: true,
       title: true,
