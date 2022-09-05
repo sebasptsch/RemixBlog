@@ -38,9 +38,6 @@ const Nav: React.FC<{
           />
           {user ? (
             <>
-              <Button as={Link} to="/auth/logout">
-                Logout
-              </Button>
               <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                   Profile
@@ -50,10 +47,18 @@ const Nav: React.FC<{
                     My Account
                   </MenuItem>
                   {user.role === Role.ADMIN ? (
-                    <MenuItem as={Link} to="/admin">
+                    <MenuItem as={Link} to="/admin/posts">
                       Posts
                     </MenuItem>
                   ) : null}
+                  {user.role === Role.ADMIN ? (
+                    <MenuItem as={Link} to="/admin/users">
+                      Users
+                    </MenuItem>
+                  ) : null}
+                  <MenuItem as={Link} to="/auth/logout">
+                    Logout
+                  </MenuItem>
                 </MenuList>
               </Menu>
             </>
