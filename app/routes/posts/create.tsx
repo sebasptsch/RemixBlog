@@ -28,6 +28,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     failureRedirect: "/auth/login",
   });
   if (user.role !== "ADMIN") return redirect("/auth/login");
+  return null;
 };
 
 export const meta: MetaFunction = ({ data }: { data: LoaderData }) => ({
