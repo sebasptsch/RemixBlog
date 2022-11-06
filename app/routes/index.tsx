@@ -1,4 +1,11 @@
-import { Divider, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import {
+  Divider,
+  Heading,
+  Link,
+  SimpleGrid,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { HeadersFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Post from "~/components/Post";
@@ -27,6 +34,9 @@ export default function Index() {
         <Text as="h2" fontSize={"2xl"}>
           An archive and showcase of my experiences and projects.
         </Text>
+        <Link as={"a"} rel="me" href="https://aus.social/@sebasptsch">
+          Mastodon
+        </Link>
       </Stack>
       <Divider my={5} />
       <SimpleGrid columns={[1, 2]} spacing={10} width="100%">
