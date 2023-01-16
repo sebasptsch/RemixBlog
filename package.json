@@ -45,7 +45,7 @@
     "@types/luxon": "^3.0.1",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
-    "@types/validator": "^13.7.6",
+    "@types/validator": "^13.7.10",
     "eslint": "^8.20.0",
     "patch-package": "^6.4.7",
     "prisma": "^4.3.1",
