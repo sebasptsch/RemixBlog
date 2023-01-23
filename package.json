@@ -39,7 +39,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.7.0",
+    "@remix-run/dev": "^1.11.1",
     "@remix-run/eslint-config": "^1.7.0",
     "@types/lodash": "^4.14.184",
     "@types/luxon": "^3.0.1",
