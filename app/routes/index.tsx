@@ -34,7 +34,7 @@ export default function Index() {
         <Text as="h2" fontSize={"2xl"}>
           An archive and showcase of my experiences and projects.
         </Text>
-        <Link as={"a"} rel="me" href="https://aus.social/@sebasptsch">
+        <Link as={"a"} rel="me" href="https://hachyderm.io/@sebasptsch">
           Mastodon
         </Link>
       </Stack>
