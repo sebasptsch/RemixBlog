@@ -6,19 +6,13 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
-
-  // Configure tool-specific properties.
   "customizations": {
-    // Configure properties specific to VS Code.
     "vscode": {
-      // Add the IDs of extensions you want installed when the container is created.
-      "extensions": [
-        "dbaeumer.vscode-eslint",
-        "Prisma.prisma",
-        "esbenp.prettier-vscode"
-      ]
+      "extensions": ["Prisma.prisma", "esbenp.prettier-vscode", "GitHub.vscode-pull-request-github"],
     }
   },
+  // Configure tool-specific properties.
+  
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // This can be used to network with other containers or with the host.
@@ -28,9 +22,5 @@
   "postCreateCommand": "yarn install && yarn prisma migrate deploy",
 
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-  "remoteUser": "node",
-  "features": {
-    "git": "os-provided",
-    "github-cli": "latest"
-  }
+  "remoteUser": "node"
 }

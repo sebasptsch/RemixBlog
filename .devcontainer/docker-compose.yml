@@ -9,7 +9,7 @@ services:
         # Update 'VARIANT' to pick an LTS version of Node.js: 18, 16, 14.
         # Append -bullseye or -buster to pin to an OS version.
         # Use -bullseye variants on local arm64/Apple Silicon.
-        VARIANT: 16-bullseye
+        VARIANT: 18-bullseye
 
     volumes:
       - ..:/workspace:cached
@@ -17,11 +17,9 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
-    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    networks:
-      dev-net:
-        aliases:
-          - app
+    links:
+      - db:postgres
+      - cache:redis
     # Uncomment the next line to use a non-root user for all processes.
     # user: node
 
@@ -44,10 +42,6 @@ services:
   cache:
     image: redis:latest
     restart: unless-stopped
-    networks:
-      dev-net:
-        aliases:
-          - redis
     volumes:
       - redis-data:/data
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
