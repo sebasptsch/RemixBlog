@@ -7,14 +7,7 @@
       {
         "matchUpdateTypes": ["minor", "patch"],
         "groupName": "Dependencies",
-        "packageNames": ["*"],
-        "exclude": [
-          "^eslint-",
-          "^@types/",
-          "^@babel/",
-          "^jest/",
-          "^prettier/"
-        ]
+        "packageNames": ["*"]
       }
     ],
     "prCreation": "github",
