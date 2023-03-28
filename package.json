@@ -36,7 +36,7 @@
     "slate-react": "0.83.0",
     "validate.js": "0.13.1",
     "validator": "13.7.0",
-    "yup": "0.32.11"
+    "yup": "1.0.2"
   },
   "devDependencies": {
     "@remix-run/dev": "1.12.0",
