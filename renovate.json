@@ -8,7 +8,6 @@
         "matchUpdateTypes": ["minor", "patch"],
         "groupName": "Dependencies",
         "packageNames": ["*"],
-        // "automerge": true,
         "exclude": [
           "^eslint-",
           "^@types/",
