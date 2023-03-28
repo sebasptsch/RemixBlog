@@ -27,7 +27,7 @@
     "react-dom": "18.2.0",
     "react-google-recaptcha-v3": "1.10.0",
     "react-icons": "4.7.1",
-    "remix-auth": "3.3.0",
+    "remix-auth": "3.4.0",
     "remix-auth-socials": "1.0.2",
     "sitemap": "7.1.1",
     "slate": "0.90.0",
