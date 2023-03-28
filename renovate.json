@@ -2,6 +2,18 @@
   "extends": [
     "config:base",
     ":pinAllExceptPeerDependencies"
+  ],
+  "packageRules": [
+    {
+      "groupName": "minor and patch updates",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "groupName": "major updates",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
   ]
   }
   
