@@ -1,16 +1,7 @@
 {
-    "extends": [
-      "config:base",
-      "config:node"
-    ],
-    "packageRules": [
-      {
-        "matchUpdateTypes": ["minor", "patch"],
-        "groupName": "Dependencies",
-        "packageNames": ["*"]
-      }
-    ],
-    "prCreation": "github",
-    "platform": "github"
+  "extends": [
+    "config:base",
+    ":pinAllExceptPeerDependencies"
+  ]
   }
   
