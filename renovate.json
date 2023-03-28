@@ -1,0 +1,24 @@
+{
+    "extends": [
+      "config:base",
+      "config:node"
+    ],
+    "packageRules": [
+      {
+        "matchUpdateTypes": ["minor", "patch"],
+        "groupName": "Dependencies",
+        "packageNames": ["*"],
+        // "automerge": true,
+        "exclude": [
+          "^eslint-",
+          "^@types/",
+          "^@babel/",
+          "^jest/",
+          "^prettier/"
+        ]
+      }
+    ],
+    "prCreation": "github",
+    "platform": "github"
+  }
+  
