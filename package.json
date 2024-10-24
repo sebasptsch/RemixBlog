@@ -33,7 +33,7 @@
     "slate": "0.91.4",
     "slate-history": "0.86.0",
     "slate-hyperscript": "0.77.0",
-    "slate-react": "0.92.0",
+    "slate-react": "0.110.3",
     "validate.js": "0.13.1",
     "validator": "13.9.0",
     "yup": "1.0.2"
